@@ -15,23 +15,24 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package org.patrickbelanger.investment.tool.model;
+package org.patrickbelanger.investment.tool.configuration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 
 /**
- * CompanyOverview unit test
+ * ApplicationConfig unit test
  * 
  * @author Patrick Belanger
  *
@@ -39,35 +40,32 @@ import org.springframework.web.client.RestTemplate;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @SpringBootConfiguration
-public class CompanyOverviewTest {
+@ComponentScan("org.patrickbelanger.investment.tool")
+public class ApplicationConfigTest {
 
-	@Value("${api.key}")
-	private String apiKey;
-
-	@Value("${api.company.overview.endpoint}")
-	private String apiEndpoint;
-
-	private RestTemplate restTemplate;
-
-	private final String EXPECTED_STOCK = "IBM";
-
+  @Autowired
+  private ApplicationContext context;
+  private ApplicationConfig sut;
+  
 	@Before
 	public void setUp() {
-		restTemplate = new RestTemplate();
+	  sut = context.getBean(ApplicationConfig.class);
 	}
 
+	/**
+	 * Make sure expected values matches with application.properties file
+	 */
 	@Test
-	public void companyOverview_shouldBeAbleToStoreCompanyOverviewFromService() {
-		ResponseEntity<CompanyOverview> response = restTemplate
-				.getForEntity(String.format(apiEndpoint, EXPECTED_STOCK, apiKey), CompanyOverview.class);
-		CompanyOverview companyOverview = response.getBody();
-		assertEquals(EXPECTED_STOCK, companyOverview.getSymbol());
+	public void applicationContext_shouldBeAbleToRetrieveValueFromPropertiesFile() {
+	  assertTrue(sut.isBrowserLaunch());
+	  assertEquals("8080", sut.getServerPort());
+	  assertEquals("http://localhost:%s/", sut.getServerUrl());
 	}
 
 	@After
 	public void tearDown() {
-		if (restTemplate != null) {
-			restTemplate = null;
+		if (sut != null) {
+		  sut = null;
 		}
 	}
 
