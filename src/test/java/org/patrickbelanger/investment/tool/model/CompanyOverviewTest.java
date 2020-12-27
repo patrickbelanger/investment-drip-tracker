@@ -37,7 +37,7 @@ import org.springframework.web.client.RestTemplate;
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = CompanyOverviewTest.class)
 @SpringBootConfiguration
 public class CompanyOverviewTest {
 
