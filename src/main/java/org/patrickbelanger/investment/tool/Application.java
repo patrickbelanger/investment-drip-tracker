@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package org.patrickbelanger.investment.tool.application;
+package org.patrickbelanger.investment.tool;
 
 import java.awt.Desktop;
 import java.io.IOException;
@@ -44,18 +44,26 @@ public class Application {
 	private static ApplicationConfig applicationConfig;
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
 	
+	public static ApplicationConfig getApplicationConfig() {
+    return applicationConfig;
+  }
+	
+	public static ConfigurableApplicationContext getApplicationContext() {
+	  return applicationContext;
+	}
+	
 	public static void main(String[] args) {
-		applicationContext = SpringApplication.run(Application.class, args);
+		applicationContext = SpringApplication.run(Application.class);
 		applicationConfig = applicationContext.getBean(ApplicationConfig.class);
 		launchBrowser();
 	}
-
+	
 	private static void launchBrowser() {
 		if (applicationConfig.isBrowserLaunch()) {
 			System.setProperty("java.awt.headless", "false");
 			String applicationUrl = String.format(applicationConfig.getServerUrl(), applicationConfig.getServerPort());
       try {
-			  logger.info(String.format("Open application in web browser (url: %s)", applicationUrl));
+			  logger.info("Open application in web browser (url: {})", applicationUrl);
         URI homepage = new URI(applicationUrl);
 				Desktop.getDesktop().browse(homepage);
 			} catch (URISyntaxException | IOException e) {
