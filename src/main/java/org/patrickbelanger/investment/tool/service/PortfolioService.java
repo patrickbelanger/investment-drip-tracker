@@ -31,4 +31,6 @@ public interface PortfolioService {
   public int addPortfolio(final Portfolio portfolio);
   public List<Portfolio> getPortfolios(); 
   public int updatePortfolio(final int id, final Portfolio portfolio);
+  public int deletePortfolio(final int id);
+  
 }

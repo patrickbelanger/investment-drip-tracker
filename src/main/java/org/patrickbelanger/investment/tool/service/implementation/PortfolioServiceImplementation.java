@@ -54,4 +54,8 @@ public class PortfolioServiceImplementation implements PortfolioService {
     );
   }
   
+  public int deletePortfolio(final int id) {
+    return jdbcTemplate.update("DELETE FROM PORTFOLIOS WHERE ID = ?", id);
+  }
+  
 }

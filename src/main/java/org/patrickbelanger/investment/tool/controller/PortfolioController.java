@@ -22,6 +22,7 @@ import java.util.List;
 import org.patrickbelanger.investment.tool.model.Portfolio;
 import org.patrickbelanger.investment.tool.service.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -54,8 +55,13 @@ public class PortfolioController {
   }
   
   @PutMapping("/")
-  public void updatePortfolio(@RequestParam(name = "id") int id, @RequestBody Portfolio portfolio) {
-    portfolioService.updatePortfolio(id, portfolio);
+  public int updatePortfolio(@RequestParam(name = "id") int id, @RequestBody Portfolio portfolio) {
+    return portfolioService.updatePortfolio(id, portfolio);
   }
     
+  @DeleteMapping("/")
+  public int deletePortfolio(@RequestParam(name = "id") int id) {
+    return portfolioService.deletePortfolio(id);
+  }
+  
 }
