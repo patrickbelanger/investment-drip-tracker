@@ -22,7 +22,6 @@ import java.util.List;
 import org.patrickbelanger.investment.tool.model.Portfolio;
 import org.patrickbelanger.investment.tool.service.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
