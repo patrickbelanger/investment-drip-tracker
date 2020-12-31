@@ -28,7 +28,7 @@ import org.patrickbelanger.investment.tool.model.Portfolio;
  */
 public interface PortfolioService {
 
-  public int addPortfolio(Portfolio portfolio);
+  public int addPortfolio(final Portfolio portfolio);
   public List<Portfolio> getPortfolios(); 
-  
+  public int updatePortfolio(final int id, final Portfolio portfolio);
 }

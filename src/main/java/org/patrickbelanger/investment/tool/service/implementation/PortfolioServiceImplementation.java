@@ -22,11 +22,13 @@ import java.util.List;
 import org.patrickbelanger.investment.tool.model.Portfolio;
 import org.patrickbelanger.investment.tool.service.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 /**
+ * PortfolioServiceImplementation class
  * 
  * @author Patrick Belanger
  *
@@ -37,9 +39,9 @@ public class PortfolioServiceImplementation implements PortfolioService {
   @Autowired  
   private JdbcTemplate jdbcTemplate;    
   
-  public int addPortfolio(Portfolio portfolio) {
-    return jdbcTemplate.update("INSERT INTO PORTFOLIOS (ACCOUNT_TYPE, ACCOUNT_TYPE_OTHER_DESCRIPTION) VALUE (?, ?)", 
-        new Object[] { portfolio.getAccountType(), portfolio.getAccountTypeOtherDescription()});
+  public int addPortfolio(final Portfolio portfolio) {
+    return jdbcTemplate.update("INSERT INTO PORTFOLIOS(ACCOUNT_TYPE, ACCOUNT_TYPE_OTHER_DESCRIPTION) VALUES (?, ?)", 
+        new Object[] { portfolio.getAccountType().toString(), portfolio.getAccountTypeOtherDescription()});
   }
   
   @Override
@@ -47,4 +49,10 @@ public class PortfolioServiceImplementation implements PortfolioService {
     return jdbcTemplate.query("SELECT * FROM PORTFOLIOS", new BeanPropertyRowMapper<Portfolio>(Portfolio.class));
   }
 
+  public int updatePortfolio(final int id, final Portfolio portfolio) {
+    return jdbcTemplate.update("UPDATE PORTFOLIOS SET ACCOUNT_TYPE=?, ACCOUNT_TYPE_OTHER_DESCRIPTION=? WHERE ID=?",
+        new Object[] { portfolio.getAccountType().toString(), portfolio.getAccountTypeOtherDescription(), id}
+    );
+  }
+  
 }
