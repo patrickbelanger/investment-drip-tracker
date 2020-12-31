@@ -17,7 +17,6 @@
 
 package org.patrickbelanger.investment.tool.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.patrickbelanger.investment.tool.model.Portfolio;
@@ -42,7 +41,7 @@ public class PortfolioController {
   
   @GetMapping("/all")
   public List<Portfolio> getPortfolios() {
-    return portfolioService.getPortfolios();
+   return portfolioService.getPortfolios();
   }
   
   

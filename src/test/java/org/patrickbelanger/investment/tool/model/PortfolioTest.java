@@ -49,13 +49,9 @@ public class PortfolioTest {
   
   @Before
   public void setUp() {
-    Holding holding = new Holding();
-    holding.setSymbol("IBM");
-    holding.setNumberOfShares(5);
     sut = new Portfolio();
     sut.setAccountType(Account.TFSA);
     sut.setAccountTypeOtherDescription("Wealthsimple TSFA account");
-    sut.getHoldings().add(holding);
   }
 
   @Rule

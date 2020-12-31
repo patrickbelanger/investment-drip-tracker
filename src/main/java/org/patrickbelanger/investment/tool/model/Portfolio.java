@@ -17,8 +17,8 @@
 
 package org.patrickbelanger.investment.tool.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import org.patrickbelanger.investment.tool.type.Account;
 import org.springframework.data.annotation.Id;
@@ -36,24 +36,23 @@ import lombok.Setter;
  *
  */
 @JsonSubTypes({
-  @Type(name="accountType", value=Account.class), 
+  @Type(name="accountType", value=Account.class),
 })
 @Component
 public class Portfolio {
 
   @Id
+  @Getter
+  @Setter
   private int id;
   
   @Getter
   @Setter
+  @Enumerated(EnumType.STRING)
   private Account accountType;
   
   @Getter
   @Setter
   private String accountTypeOtherDescription;
- 
-  @Getter
-  @Setter
-  private List<Holding> holdings = new ArrayList<>();
   
 }

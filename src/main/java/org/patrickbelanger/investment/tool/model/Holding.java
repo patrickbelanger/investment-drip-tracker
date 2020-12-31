@@ -17,6 +17,7 @@
 
 package org.patrickbelanger.investment.tool.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,6 +33,15 @@ import lombok.Setter;
 @Component
 public class Holding {
 
+  @Id
+  @Getter
+  @Setter
+  private int id;
+  
+  @Getter
+  @Setter
+  private int portfolioId;
+  
   @Getter
   @Setter
   private String symbol;
