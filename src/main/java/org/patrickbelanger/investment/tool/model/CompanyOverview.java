@@ -107,12 +107,12 @@ public class CompanyOverview {
 	@JsonProperty("PERatio")
 	@Getter
 	@Setter
-	private double peratio;
+	private double peRatio;
 	
 	@JsonProperty("PEGRatio")
 	@Getter
 	@Setter
-	private double pegratio;
+	private double pegRatio;
 
 	@Getter
 	@Setter
@@ -143,32 +143,32 @@ public class CompanyOverview {
 	@JsonProperty("OperatingMarginTTM")
 	@Getter
 	@Setter
-	private double OperatingMarginTTM;
+	private double operatingMarginTtm;
 	
 	@JsonProperty("ReturnOnAssetsTTM")
 	@Getter
 	@Setter
-	private double ReturnOnAssetsTTM;
+	private double returnOnAssetsTtm;
 	
 	@JsonProperty("ReturnOnEquityTTM")
 	@Getter
 	@Setter
-	private double ReturnOnEquityTTM;
+	private double returnOnEquityTtm;
 	
-	@JsonProperty("RevenuePerShareTTM")
+	@JsonProperty("RevenueTTM")
 	@Getter
 	@Setter
-	private long RevenuePerShareTTM;
+	private long revenueTtm;
 
 	@JsonProperty("GrossProfitTTM")
 	@Getter
 	@Setter
-	private long GrossProfitTTM;
+	private long grossProfitTtm;
 	
 	@JsonProperty("DilutedEPSTTM")
 	@Getter
 	@Setter
-	private double DilutedEPSTTM;
+	private double dilutedEpsTtm;
 	
 	@JsonProperty("QuarterlyEarningsGrowthYOY")
 	@Getter
@@ -220,22 +220,22 @@ public class CompanyOverview {
 	@JsonProperty("52WeekHigh")
 	@Getter
 	@Setter
-	private double FiftyTwoWeekHigh;
+	private double fiftyTwoWeekHigh;
 
 	@JsonProperty("52WeekLow")
 	@Getter
 	@Setter
-	private double FiftyTwoWeekLow;
+	private double fiftyTwoWeekLow;
 	
 	@JsonProperty("50DayMovingAverage")
 	@Getter
 	@Setter
-	private double FiftyDayMovingAverage;
+	private double fiftyDayMovingAverage;
 	
 	@JsonProperty("200DayMovingAverage")
 	@Getter
 	@Setter
-	private double TwoHundredDayMovingAverage;
+	private double twoHundredDayMovingAverage;
 	
 	@Getter
 	@Setter
@@ -288,7 +288,7 @@ public class CompanyOverview {
 	@JsonDeserialize(using = DateDeserializer.class)
 	@Getter
 	@Setter
-	private Date DividendDate;
+	private Date dividendDate;
 	
 	@JsonDeserialize(using = DateDeserializer.class)
 	@Getter

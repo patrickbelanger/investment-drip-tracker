@@ -17,58 +17,56 @@
 
 package org.patrickbelanger.investment.tool.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
+import org.patrickbelanger.investment.tool.type.Account;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * CompanyOverview unit test
+ * Portfolio unit test
  * 
  * @author Patrick Belanger
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CompanyOverviewTest.class)
+@SpringBootTest(classes = PortfolioTest.class)
 @SpringBootConfiguration
-public class CompanyOverviewTest {
+public class PortfolioTest {
 
-	@Value("${api.key}")
-	private String apiKey;
+  private Portfolio sut;
+  private String json;
+  
+  @Before
+  public void setUp() {
+    sut = new Portfolio();
+    sut.setAccountType(Account.TFSA);
+    sut.setAccountTypeOtherDescription("Wealthsimple TSFA account");
+  }
 
-	@Value("${api.company.overview.endpoint}")
-	private String apiEndpoint;
+  @Rule
+  public ExpectedException exceptionRule = ExpectedException.none();
+  
+  @Test
+  public void portfolioTest_shouldBeAbleSerialize() throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    this.json =  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(sut);
+    assertNotNull(this.json);
+  }
 
-	private RestTemplate restTemplate;
-
-	private final String EXPECTED_STOCK = "IBM";
-
-	@Before
-	public void setUp() {
-		restTemplate = new RestTemplate();
-	}
-
-	@Test
-	public void companyOverview_shouldBeAbleToStoreCompanyOverviewFromService() {
-		ResponseEntity<CompanyOverview> response = restTemplate
-				.getForEntity(String.format(apiEndpoint, EXPECTED_STOCK, apiKey), CompanyOverview.class);
-		CompanyOverview companyOverview = response.getBody();
-		assertEquals(EXPECTED_STOCK, companyOverview.getSymbol());
-	}
-
-	@After
-	public void tearDown() {
-		if (restTemplate != null) {
-			restTemplate = null;
-		}
-	}
-
+  @After
+  public void tearDown() {
+    
+  }
+  
 }
