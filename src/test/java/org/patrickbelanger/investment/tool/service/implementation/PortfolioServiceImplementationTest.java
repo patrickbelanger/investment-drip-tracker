@@ -33,6 +33,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -83,6 +84,8 @@ public class PortfolioServiceImplementationTest {
     Application.main(null);
   }
 
+  /* Data provider */
+  
   private String setValidRequest() throws JSONException {
     return setValidRequest("Integration testing");
   }
@@ -102,39 +105,58 @@ public class PortfolioServiceImplementationTest {
     return portfolioObject.toString();
   }
 
-  private String setInvalidRequestInvalidJsonAttribute() throws JSONException {
-    JSONObject portfolioObject = new JSONObject();
-    portfolioObject.put("accountType", "TFSA");
-    portfolioObject.put("invalidJsonAttribute", "Integration testing (will trigger HttpClientErrorException)");
-    return portfolioObject.toString();
-  }
-
+  /* Utility */
+  
   private ResponseEntity<Object> setRequest(String json) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<String> request = new HttpEntity<String>(json, headers);
     return restTemplate.postForEntity(String.format("%s%s", applicationUrl, apiEndpointPost), request, Object.class);
   }
-
+  
+  private ResponseEntity<Object> updateRequest(String json, int id) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<String> request = new HttpEntity<String>(json, headers);
+    return restTemplate.exchange(
+        String.format("%s%s%s", applicationUrl, apiEndpointPut, id), HttpMethod.PUT, request, Object.class);
+  }
+  
+  /* Delete */
+  
+  /* Get */
+  
   /* Post */
   
   @Test(expected = HttpClientErrorException.class)
-  public void portfolioService_shouldTriggerHttpClientErrorExceptionCausedInvalidRequestAccountTypeValue()
+  public void portfolioService_add_shouldTriggerHttpClientErrorExceptionCausedInvalidRequestAccountTypeValue()
       throws JSONException {
     ResponseEntity<Object> response = setRequest(setInvalidRequestAccountTypeValue());
     assertNull(response);
   }
-
-  @Test(expected = HttpClientErrorException.class)
-  public void portfolioService_shouldTriggerHttpClientErrorExceptionCausedInvalidJsonAttribute() throws JSONException {
-    ResponseEntity<Object> response = setRequest(setInvalidRequestInvalidJsonAttribute());
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-  }
- 
+  
   @Test
-  public void portfolioService_shouldBeAbleToSaveANewPortfolio() throws JSONException {
+  public void portfolioService_add_shouldBeAbleToSaveANewPortfolio() throws JSONException {
     ResponseEntity<Object> response = setRequest(setValidRequest());
     assertEquals(HttpStatus.OK, response.getStatusCode());
+  }
+
+  /* Update */
+  @Test
+  public void portfolioService_update_shouledBeAbleToUpdateAnExistingPortfolio() throws JSONException {
+    ResponseEntity<Object> response = setRequest(setValidRequest()); // Add a row
+    response = updateRequest(setValidRequest("Integration testing (update)"), 1);
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(1, response.getBody());
+  }
+  
+  @Test(expected = HttpClientErrorException.class)
+  public void portfolioService_update_shouldTriggerHttpClientErrorExceptionCausedInvalidRequestAccountTypeValue() 
+      throws JSONException {
+    ResponseEntity<Object> response = setRequest(setValidRequest()); // Add a row
+    response = updateRequest(setInvalidRequestAccountTypeValue(), 1); // Update row
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(1, response.getBody());
   }
   
   @After

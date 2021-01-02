@@ -24,6 +24,7 @@ import org.patrickbelanger.investment.tool.type.Account;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
@@ -38,6 +39,7 @@ import lombok.Setter;
 @JsonSubTypes({
   @Type(name="accountType", value=Account.class),
 })
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 public class Portfolio {
 

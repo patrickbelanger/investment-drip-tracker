@@ -22,13 +22,14 @@ import java.util.List;
 import org.patrickbelanger.investment.tool.model.Portfolio;
 import org.patrickbelanger.investment.tool.service.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -50,17 +51,17 @@ public class PortfolioController {
   }
   
   @GetMapping("/all")
-  public List<Portfolio> getPortfolios() {
+  public ResponseEntity<List<Portfolio>> getPortfolios() {
    return portfolioService.getPortfolios();
   }
   
-  @PutMapping("/")
-  public int updatePortfolio(@RequestParam(name = "id") int id, @RequestBody Portfolio portfolio) {
+  @PutMapping("/{id}")
+  public int updatePortfolio(@PathVariable("id") int id, @RequestBody Portfolio portfolio) {
     return portfolioService.updatePortfolio(id, portfolio);
   }
     
-  @DeleteMapping("/")
-  public int deletePortfolio(@RequestParam(name = "id") int id) {
+  @DeleteMapping("/{id}")
+  public int deletePortfolio(@PathVariable("id") int id) {
     return portfolioService.deletePortfolio(id);
   }
   

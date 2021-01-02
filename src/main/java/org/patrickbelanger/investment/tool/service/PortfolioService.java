@@ -20,6 +20,7 @@ package org.patrickbelanger.investment.tool.service;
 import java.util.List;
 
 import org.patrickbelanger.investment.tool.model.Portfolio;
+import org.springframework.http.ResponseEntity;
 
 /**
  * 
@@ -29,7 +30,7 @@ import org.patrickbelanger.investment.tool.model.Portfolio;
 public interface PortfolioService {
 
   public int addPortfolio(final Portfolio portfolio);
-  public List<Portfolio> getPortfolios(); 
+  public ResponseEntity<List<Portfolio>> getPortfolios(); 
   public int updatePortfolio(final int id, final Portfolio portfolio);
   public int deletePortfolio(final int id);
   
