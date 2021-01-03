@@ -18,7 +18,6 @@
 package org.patrickbelanger.investment.tool.service.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,34 +37,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * PortfolioServiceImplementationTest unit test
+ * HoldingServiceImplementationTest unit test
  * 
  * @author Patrick Belanger
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = PortfolioServiceImplementationTest.class)
+@SpringBootTest(classes = HoldingServiceImplementationTest.class)
 @SpringBootConfiguration
 @EnableAutoConfiguration
-public class PortfolioServiceImplementationTest {
+public class HoldingServiceImplementationTest {
 
   @Value("${api.key}")
   private String apiKey;
 
-  @Value("${api.portfolio.endpoint.delete}")
+  @Value("${api.holding.endpoint.delete}")
   private String apiEndpointDelete;
 
-  @Value("${api.portfolio.endpoint.get}")
+  @Value("${api.holding.endpoint.get}")
   private String apiEndpointGet;
 
-  @Value("${api.portfolio.endpoint.post}")
+  @Value("${api.holding.endpoint.post}")
   private String apiEndpointPost;
 
-  @Value("${api.portfolio.endpoint.put}")
+  @Value("${api.holding.endpoint.put}")
   private String apiEndpointPut;
 
   @Value("${server.port}")
@@ -87,24 +85,19 @@ public class PortfolioServiceImplementationTest {
   /* Data provider */
   
   private String setValidRequest() throws JSONException {
-    return setValidRequest("Integration testing");
+    JSONObject holdingObject = new JSONObject();
+    holdingObject.put("portfolioId", 1);
+    holdingObject.put("symbol", "T.TO");
+    holdingObject.put("exchange", "TSX");
+    holdingObject.put("numberOfShares", 10);
+    holdingObject.put("bookValue", 12.43);
+    holdingObject.put("dividendYield", 3.54);
+    holdingObject.put("dividendPerShare", 0.10);
+    holdingObject.put("shareCurrentValue", 13.50);
+    holdingObject.put("shareMaxValue", 15.50);
+    return holdingObject.toString();
   }
-  
-  private String setValidRequest(String description) throws JSONException {
-    JSONObject portfolioObject = new JSONObject();
-    portfolioObject.put("accountType", "TFSA");
-    portfolioObject.put("accountTypeOtherDescription", description);
-    return portfolioObject.toString();
-  }
-  
-
-  private String setInvalidRequestAccountTypeValue() throws JSONException {
-    JSONObject portfolioObject = new JSONObject();
-    portfolioObject.put("accountType", "TSFA");
-    portfolioObject.put("accountTypeOtherDescription", "Integration testing (will trigger HttpClientErrorException)");
-    return portfolioObject.toString();
-  }
-
+    
   /* Utility */
   
   private ResponseEntity<Object> setRequest(String json) {
@@ -128,33 +121,17 @@ public class PortfolioServiceImplementationTest {
   
   /* Post */
   
-  @Test(expected = HttpClientErrorException.class)
-  public void portfolioService_add_shouldTriggerHttpClientErrorExceptionCausedInvalidRequestAccountTypeValue()
-      throws JSONException {
-    ResponseEntity<Object> response = setRequest(setInvalidRequestAccountTypeValue());
-    assertNull(response);
-  }
-  
   @Test
-  public void portfolioService_add_shouldBeAbleToSaveANewPortfolio() throws JSONException {
+  public void holdingService_add_shouldBeAbleToSaveANewHolding() throws JSONException {
     ResponseEntity<Object> response = setRequest(setValidRequest());
     assertEquals(HttpStatus.OK, response.getStatusCode());
   }
 
   /* Update */
   @Test
-  public void portfolioService_update_shouledBeAbleToUpdateAnExistingPortfolio() throws JSONException {
+  public void holdingService_update_shouledBeAbleToUpdateAnExistingHolding() throws JSONException {
     ResponseEntity<Object> response = setRequest(setValidRequest()); // Add a row
-    response = updateRequest(setValidRequest("Integration testing (update)"), 1);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(1, response.getBody());
-  }
-  
-  @Test(expected = HttpClientErrorException.class)
-  public void portfolioService_update_shouldTriggerHttpClientErrorExceptionCausedInvalidRequestAccountTypeValue() 
-      throws JSONException {
-    ResponseEntity<Object> response = setRequest(setValidRequest()); // Add a row
-    response = updateRequest(setInvalidRequestAccountTypeValue(), 1); // Update row
+    response = updateRequest(setValidRequest(), 1);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(1, response.getBody());
   }

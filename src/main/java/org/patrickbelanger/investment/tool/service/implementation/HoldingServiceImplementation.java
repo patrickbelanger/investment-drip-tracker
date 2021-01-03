@@ -40,32 +40,32 @@ public class HoldingServiceImplementation implements HoldingService {
   @Autowired  
   private JdbcTemplate jdbcTemplate;    
   
-  public int addHolding(final Holding Holding) {
-    return jdbcTemplate.update("INSERT INTO HOLDINGS(PORTFOLIO_ID, SYMBOL, EXCHANGE, NUMBER_OF_SHARES, BOOK_VALUE, "
+  public int addHolding(final Holding holding) {
+    return jdbcTemplate.update("INSERT INTO HOLDINGS (PORTFOLIO_ID, SYMBOL, EXCHANGE, NUMBER_OF_SHARES, BOOK_VALUE, "
         + "DIVIDEND_YIELD, DIVIDEND_PER_SHARE, SHARE_CURRENT_VALUE, SHARE_MAX_VALUE) "
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        Holding.getPortfolioId(), Holding.getSymbol(), Holding.getExchange(), Holding.getNumberOfShares(), 
-        Holding.getBookValue(), Holding.getDividendYield(), Holding.getDividendPerShare(), 
-        Holding.getShareCurrentValue(), Holding.getShareMaxValue());
+        holding.getPortfolioId(), holding.getSymbol(), holding.getExchange(), holding.getNumberOfShares(), 
+        holding.getBookValue(), holding.getDividendYield(), holding.getDividendPerShare(), 
+        holding.getShareCurrentValue(), holding.getShareMaxValue());
   }
   
   @Override
   public ResponseEntity<List<Holding>> getHoldings() {
-    return new ResponseEntity<List<Holding>>(
+    return new ResponseEntity<>(
         jdbcTemplate.query("SELECT * FROM HOLDINGS", new BeanPropertyRowMapper<Holding>(Holding.class)),
         HttpStatus.OK);
   }
 
-  public int updateHolding(final int id, final Holding Holding) {
-    return jdbcTemplate.update("UPDATE HOLDING SET PORTFOLIO_ID=?, SYMBOL=?, EXCHANGE=?, NUMBER_OF_SHARES=?, "
+  public int updateHolding(final int id, final Holding holding) {
+    return jdbcTemplate.update("UPDATE HOLDINGS SET PORTFOLIO_ID=?, SYMBOL=?, EXCHANGE=?, NUMBER_OF_SHARES=?, "
         + "BOOK_VALUE=?, DIVIDEND_YIELD=?, DIVIDEND_PER_SHARE=?, SHARE_CURRENT_VALUE=?, SHARE_MAX_VALUE=?",
-        Holding.getPortfolioId(), Holding.getSymbol(), Holding.getExchange(), Holding.getNumberOfShares(), 
-        Holding.getBookValue(), Holding.getDividendYield(), Holding.getDividendPerShare(), 
-        Holding.getShareCurrentValue(), Holding.getShareMaxValue());
+        holding.getPortfolioId(), holding.getSymbol(), holding.getExchange(), holding.getNumberOfShares(), 
+        holding.getBookValue(), holding.getDividendYield(), holding.getDividendPerShare(), 
+        holding.getShareCurrentValue(), holding.getShareMaxValue());
   }
   
   public int deleteHolding(final int id) {
-    return jdbcTemplate.update("DELETE FROM HOLDING WHERE ID = ?", id);
+    return jdbcTemplate.update("DELETE FROM HOLDINGS WHERE ID = ?", id);
   }
   
 }
