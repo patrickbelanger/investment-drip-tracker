@@ -47,6 +47,12 @@ public class Holding {
   private String symbol;
   
   /**
+   * On which exchange the symbol is traded
+   */
+  @Getter
+  @Setter String exchange; 
+  
+  /**
    * Number of share you own/purchased
    */
   @Getter
@@ -87,6 +93,11 @@ public class Holding {
   
   @Getter
   @Setter
-  private double share;
+  private double shareCurrentValue;
+  
+  @Getter
+  @Setter
+  private double shareMaxValue;
+  
   
 }

@@ -76,7 +76,8 @@ public class CompanyOverviewToHoldingAdapterTest {
     assertEquals(companyOverview.getDividendPerShare(), holding.getDividendPerShare());
     assertEquals(companyOverview.getDividendYield(), holding.getDividendYield());
     assertEquals(0, holding.getNumberOfShares()); // This is provided manually by the user
-    assertEquals(0.0, holding.getShare()); // Another service call (quote service) is required to get that value
+    assertEquals(0.0, holding.getShareCurrentValue()); 
+      // Another service call (quote service) is required to get that value
     assertEquals(companyOverview.getSymbol(), holding.getSymbol());
     assertEquals(EXPECTED_STOCK, holding.getSymbol());
   }

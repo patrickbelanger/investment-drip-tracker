@@ -41,13 +41,13 @@ public class PortfolioServiceImplementation implements PortfolioService {
   private JdbcTemplate jdbcTemplate;    
   
   public int addPortfolio(final Portfolio portfolio) {
-    return jdbcTemplate.update("INSERT INTO PORTFOLIOS(ACCOUNT_TYPE, ACCOUNT_TYPE_OTHER_DESCRIPTION) VALUES (?, ?)", 
+    return jdbcTemplate.update("INSERT INTO PORTFOLIOS (ACCOUNT_TYPE, ACCOUNT_TYPE_OTHER_DESCRIPTION) VALUES (?, ?)", 
         portfolio.getAccountType().toString(), portfolio.getAccountTypeOtherDescription());
   }
   
   @Override
   public ResponseEntity<List<Portfolio>> getPortfolios() {
-    return new ResponseEntity<List<Portfolio>>(
+    return new ResponseEntity<>(
         jdbcTemplate.query("SELECT * FROM PORTFOLIOS", new BeanPropertyRowMapper<Portfolio>(Portfolio.class)),
         HttpStatus.OK);
   }
