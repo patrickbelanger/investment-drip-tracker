@@ -26,4 +26,5 @@ hs_err_pid*
 /.project
 /.settings
 /.dbeaver
+/src/main/resources/public/node_modules
 /sonarqube.bat
