@@ -63,6 +63,15 @@ public class CompanyOverviewTest {
 		CompanyOverview companyOverview = response.getBody();
 		assertEquals(EXPECTED_STOCK, companyOverview.getSymbol());
 	}
+	
+
+  @Test
+  public void companyOverview_shouldBeAbleToStoreCompanyOverviewTsxExchangeFromService() {
+    ResponseEntity<CompanyOverview> response = restTemplate
+        .getForEntity(String.format(apiEndpoint, "T.TO", apiKey), CompanyOverview.class);
+    CompanyOverview companyOverview = response.getBody();
+    assertEquals("T.TO", companyOverview.getSymbol());
+  }
 
 	@After
 	public void tearDown() {
