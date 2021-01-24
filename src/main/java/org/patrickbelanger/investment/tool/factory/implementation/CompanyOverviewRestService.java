@@ -15,27 +15,22 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package org.patrickbelanger.investment.tool.type;
+package org.patrickbelanger.investment.tool.factory.implementation;
+
+import org.patrickbelanger.investment.tool.model.CompanyOverview;
 
 /**
- * Current type
+ * Company Overview Implementation using Rest template to fetch information from Alpha Vantage API
+ * (For NYSE, NYSE ARCA, NYSE MKT, and NASDAQ) 
  * @author Patrick Belanger
  *
  */
-public enum Currency {
-  
-  CAD("CAD"),
-  USD("USD");
-  
-  private String currencyValue;
-  
-  private Currency(String currencyValue) {
-    this.currencyValue = currencyValue;
-  }
-  
+public class CompanyOverviewRestService implements CompanyOverviewService {
+
   @Override
-  public String toString() {
-    return this.currencyValue;
+  public CompanyOverview getCompanyOverview() {
+    // TODO Auto-generated method stub
+    return null;
   }
-  
+
 }

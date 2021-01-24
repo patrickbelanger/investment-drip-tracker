@@ -15,27 +15,17 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package org.patrickbelanger.investment.tool.type;
+package org.patrickbelanger.investment.tool.factory.implementation;
+
+import org.patrickbelanger.investment.tool.model.CompanyOverview;
 
 /**
- * Current type
+ * 
  * @author Patrick Belanger
  *
  */
-public enum Currency {
-  
-  CAD("CAD"),
-  USD("USD");
-  
-  private String currencyValue;
-  
-  private Currency(String currencyValue) {
-    this.currencyValue = currencyValue;
-  }
-  
-  @Override
-  public String toString() {
-    return this.currencyValue;
-  }
+public interface CompanyOverviewService {
+
+  CompanyOverview getCompanyOverview();
   
 }

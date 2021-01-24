@@ -15,27 +15,21 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package org.patrickbelanger.investment.tool.type;
+package org.patrickbelanger.investment.tool.factory.implementation;
 
 /**
- * Current type
+ * 
  * @author Patrick Belanger
  *
  */
-public enum Currency {
+public class CompanyOverviewDomParserMoneyTsx extends CompanyOverviewDomParser {
+
+  private static final String PROVIDER_URL = "https://money.tmx.com/en/quote/%s";
+  private static final String SELECTOR_INFORMATION_CONTAINER = "#main > div > div:nth-child(3) > div[data-testid='key-data-wrapper']";
   
-  CAD("CAD"),
-  USD("USD");
-  
-  private String currencyValue;
-  
-  private Currency(String currencyValue) {
-    this.currencyValue = currencyValue;
-  }
-  
-  @Override
-  public String toString() {
-    return this.currencyValue;
+  public CompanyOverviewDomParserMoneyTsx(String symbol) {
+    super(PROVIDER_URL, symbol);
+    setElements(getDocument().select(SELECTOR_INFORMATION_CONTAINER));
   }
   
 }

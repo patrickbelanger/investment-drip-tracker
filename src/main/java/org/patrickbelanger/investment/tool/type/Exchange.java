@@ -18,24 +18,35 @@
 package org.patrickbelanger.investment.tool.type;
 
 /**
- * Current type
+ * 
  * @author Patrick Belanger
  *
  */
-public enum Currency {
+public enum Exchange {
   
-  CAD("CAD"),
-  USD("USD");
+  BATS("BATS", "Better Alternative Trading System"),
+  NASDAQ("NASDAQ", "NASDAQ"),
+  NYSE("NYSE", "New York Stock Exchange"),
+  NYSE_ARCA("NYSE ARCA", "NYSE ARCA"),
+  NYSE_MKT("NYSE MKT", "NYSE MKT"),
+  TSX("TSX", "Toronto Stock Exchange"),
+  TSXV("TSXV", "TSX Venture Exchange");
   
-  private String currencyValue;
+  private String exchangeCode;
+  private String description;
   
-  private Currency(String currencyValue) {
-    this.currencyValue = currencyValue;
+  private Exchange(String exchangeCode, String description) {
+    this.exchangeCode = exchangeCode;
+    this.description = description;
   }
   
   @Override
   public String toString() {
-    return this.currencyValue;
+    return this.exchangeCode;
+  }
+  
+  public String getDescription() {
+    return this.description;
   }
   
 }
