@@ -9,11 +9,16 @@ exchanged from New York Stock Exchange and the Nasdaq.
 
 You can claim your free API key [here](https://www.alphavantage.co/support/#api-key) and edit both application.properties files to add your own API key.
 
-**Remark**
+**Remarks**
 
 The free API key allows up to 5 API requests per minute and 500 requests per day. Since this is a homebrew project, this limitation should not be an issue. You can purchase a [premium plan](https://www.alphavantage.co/premium/) if you want to increase the number of requests per minute.
 
 For stocks from the TSX, another approach is used to gather stock the information needed to track drip. The limitation mentioned above doesn't apply in that use case/scenario.
+
+# Prerequisite to build the application
+
+* Java 8
+* Lombok - Make sure to install [Lombok plugin](https://www.baeldung.com/lombok-ide) on your IDE.
 
 ##Donate##
 
