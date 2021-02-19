@@ -23,6 +23,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.patrickbelanger.investment.tool.factory.CompanyOverviewFactory;
+import org.patrickbelanger.investment.tool.type.Exchange;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,6 +58,7 @@ public class CompanyOverviewTest {
 		restTemplate = new RestTemplate();
 	}
 
+	/*
 	@Test
 	public void companyOverview_shouldBeAbleToStoreCompanyOverviewFromService() {
 		ResponseEntity<CompanyOverview> response = restTemplate
@@ -63,14 +66,12 @@ public class CompanyOverviewTest {
 		CompanyOverview companyOverview = response.getBody();
 		assertEquals(EXPECTED_STOCK, companyOverview.getSymbol());
 	}
-	
+	*/
 
   @Test
   public void companyOverview_shouldBeAbleToStoreCompanyOverviewTsxExchangeFromService() {
-    ResponseEntity<CompanyOverview> response = restTemplate
-        .getForEntity(String.format(apiEndpoint, "T.TO", apiKey), CompanyOverview.class);
-    CompanyOverview companyOverview = response.getBody();
-    assertEquals("T.TO", companyOverview.getSymbol());
+    CompanyOverview companyOverview = CompanyOverviewFactory.getCompanyOverview("T", Exchange.TSX);
+    assertEquals("T", companyOverview.getSymbol());
   }
 
 	@After

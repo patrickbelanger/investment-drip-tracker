@@ -17,19 +17,27 @@
 
 package org.patrickbelanger.investment.tool.factory.implementation;
 
+import org.patrickbelanger.investment.tool.model.CompanyOverview;
+
 /**
  * 
  * @author Patrick Belanger
  *
  */
-public class CompanyOverviewDomParserMoneyTsx extends CompanyOverviewDomParser {
+public class CompanyOverviewDomParserMarketBeat extends CompanyOverviewDomParser {
 
-  private static final String PROVIDER_URL = "https://money.tmx.com/en/quote/%s";
-  private static final String SELECTOR_INFORMATION_CONTAINER = "#main > div > div:nth-child(3) > div[data-testid='key-data-wrapper']";
+  private static final String PROVIDER_URL = "https://www.marketbeat.com/stocks/TSE/%s/dividend/";
+  private static final String SELECTOR_INFORMATION_CONTAINER = "div[data-testid*=value]";
   
-  public CompanyOverviewDomParserMoneyTsx(String symbol) {
+  public CompanyOverviewDomParserMarketBeat(String symbol) {
     super(PROVIDER_URL, symbol);
     setElements(getDocument().select(SELECTOR_INFORMATION_CONTAINER));
+    setCompanyOverview(getCompanyOverviewFromProvider(symbol));
   }
+  
+  private CompanyOverview getCompanyOverviewFromProvider(String symbol) {
+  	CompanyOverview companyOverview = new CompanyOverview(symbol);
+  	return companyOverview;
+  };
   
 }

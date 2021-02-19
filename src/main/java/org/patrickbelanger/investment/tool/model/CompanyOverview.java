@@ -20,6 +20,7 @@ package org.patrickbelanger.investment.tool.model;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -41,6 +42,11 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 public class CompanyOverview {
 
+	@JsonIgnore
+	public CompanyOverview(String symbol) {
+		setSymbol(symbol);
+	}
+	
 	@Getter
 	@Setter
 	private String symbol;

@@ -19,6 +19,7 @@
 			**/type/*.java
 		</sonar.coverage.exclusions>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<build>
@@ -85,6 +86,11 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.13.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<version>2.47.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>

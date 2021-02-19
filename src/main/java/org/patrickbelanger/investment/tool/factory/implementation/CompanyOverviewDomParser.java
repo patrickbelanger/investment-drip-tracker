@@ -26,6 +26,10 @@ import org.patrickbelanger.investment.tool.model.CompanyOverview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,10 +61,28 @@ public abstract class CompanyOverviewDomParser implements CompanyOverviewService
   @Setter
   protected Elements elements;
   
+  @Getter
+  @Setter
+  private HtmlPage htmlPage; 
+  
+  @Getter
+  @Setter
+  private WebClient webClient;
+  
   public CompanyOverviewDomParser(String providerUrl, String symbol) {
     try {
       setProviderUrl(providerUrl);
-      setDocument(Jsoup.connect(String.format(getProviderUrl(), symbol)).get());
+      setWebClient(new WebClient());
+      getWebClient().getOptions().setJavaScriptEnabled(true);
+      getWebClient().getOptions().setCssEnabled(false);
+      getWebClient().getOptions().setUseInsecureSSL(true);
+      getWebClient().getOptions().setThrowExceptionOnFailingStatusCode(false);
+      getWebClient().getCookieManager().setCookiesEnabled(true);
+      getWebClient().setAjaxController(new NicelyResynchronizingAjaxController());
+      getWebClient().waitForBackgroundJavaScript(15000);
+      getWebClient().getOptions().setThrowExceptionOnScriptError(false);
+      setHtmlPage(getWebClient().getPage(String.format(getProviderUrl(), symbol)));
+      setDocument(Jsoup.parse(getHtmlPage().asXml()));
     } catch (IOException e) {
       logger.debug(e.getLocalizedMessage());
     }
